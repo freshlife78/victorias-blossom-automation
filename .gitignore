@@ -1,0 +1,3 @@
+# Installed by `npm install` on each container; never committed.
+# The routine installs playwright-core at runtime for login.mjs.
+node_modules/
