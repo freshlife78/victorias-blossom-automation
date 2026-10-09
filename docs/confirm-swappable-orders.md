@@ -212,3 +212,41 @@ line/offer this run created, never anything else).
 
 Paste-in drafts: `docs/routine-block-confirm.md` (the scheduled prompt) and
 `docs/skill-section-confirm.md` (the skill).
+
+## Full run on request 3138, 2026-10-09 ~14:40 Pacific — "do the rest"
+
+Gate: Matthew's reply to the FINAL email (Thu 3:43pm, plain acknowledgement). Plan built from the swappable list × today's ledger, totals per code cross-checked against the FINAL email (all 18 codes matched). Two chunks (20 + 3) on ADMIN with a stop/start between, verification on SALES.
+
+| Swappable line | Code | Packs | Offer $/pack | Request line | Offer |
+|---|---|---|---|---|---|
+| VIC-0025989 | 1-15-050 | 2 | 66.00 | 667397 | 1549144 |
+| VIC-0025517 | 5-10-002 | 1 | 45.30 | 667398 | 1549145 |
+| VIC-0025612 | 5-10-882 | 1 | 57.75 | 667399 | 1549146 |
+| VIC-0026020 | 5-10-882 | 1 | 57.75 | 667400 | 1549147 |
+| VIC-0025490 | 5-15-009 | 1 | 38.64 | 667401 | 1549148 |
+| VIC-0025615 | 5-15-009 | 1 | 38.64 | 667402 | 1549149 |
+| VIC-0025744 | 5-15-009 | 1 | 38.64 | 667403 | 1549150 |
+| VIC-0025958 | 5-25-372 | 1 | 34.10 | 667404 | 1549151 |
+| VIC-0025617 | 5-25-423 | 2 | 30.80 | 667405 | 1549152 |
+| VIC-0026034 | 5-25-932 | 1 | 39.60 | 667406 | 1549153 |
+| VIC-0025497 | 6-20-328 | 1 | 24.75 | 667407 | 1549154 |
+| VIC-0026018 | 6-20-328 | 1 | 24.75 | 667408 | 1549155 |
+| VIC-0026019 | 6-20-930 | 1 | 42.36 | 667409 | 1549156 |
+| VIC-0025743 | 6-25-130 | 1 | 10.45 | 667410 | 1549157 |
+| VIC-0025741 | 6-25-870 | 1 | 10.45 | 667411 | 1549158 |
+| VIC-0025740 | 6-25-910 | 4 | 10.45 | 667412 | 1549159 |
+| VIC-0025742 | 6-25-930 | 1 | 10.45 | 667413 | 1549160 |
+| VIC-0025616 | 7-00-295 | 1 | 46.20 | 667414 | 1549161 |
+| VIC-0025629 | 9-00-790 | 1 | 10.72 | 667415 | 1549162 |
+| VIC-0025484 | 5-15-120 | 1 | 45.24 | 667416 | 1549163 |
+| VIC-0025739 | 7-15-340 | 1 | 125.40 | 667417 | 1549164 |
+| VIC-0025630 | 7-15-465 | 1 | 132.00 | 667418 | 1549165 |
+| VIC-0025518 | 7-00-590 | 1 | 94.56 | 667419 | 1549166 |
+
+Confirmed: 23 lines, 28 packs, offers total $1163.15. Failures: 0.
+
+Plus Ming Stump VIC-0025503 from the supervised run (667396 / 1549143): **24 of 25 lines confirmed.**
+
+- 7-00-590 (Clay Pot, VIC-0025518) is `dropped` in the ledger because Mainland de-listed it on Oct 8, but it is on the confirmed FINAL email, so it was confirmed at 11.82 × 8. The plan builder must map by product+card regardless of ledger status and use the emailed order, not today's catalogue, as the source of truth.
+- **Held back: VIC-0026072, Flower Chix Calgary, Large Flowering 6" (5-15-960), 2 packs.** Never on any order email to Matthew, so not confirmed. Needs Eduardo: order it from Mainland or tell the customer.
+- Verification: swappable list 25 → 1 (only the held-back line); customer orders VIC-0001234 and VIC-0001244 show `corresponding_offer_exists: true` on every Mainland line.
