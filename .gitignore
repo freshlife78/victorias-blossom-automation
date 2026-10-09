@@ -1,0 +1,3 @@
+# Generated at runtime by the Mainland routine; embeds a short-lived
+# Browserbase session debug token, so it must never be committed.
+liveview.html
