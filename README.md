@@ -27,5 +27,24 @@ the CDP socket on failure, and adds a `cookies` command.
 sh harden-driver.sh /opt/mlb/mlb.mjs
 ```
 
-### `package.json`
-Declares `playwright-core`, which `login.mjs` needs.
+### `setup.sh`
+Per-container prerequisites, in one idempotent script that always exits 0:
+
+1. links `node_modules` to the `playwright-core` already shipped in the runner image
+   (falls back to `npm install`), so `login.mjs` can load;
+2. runs `harden-driver.sh` against `/opt/mlb/mlb.mjs`.
+
+The runner container is rebuilt on every run, so this has to happen every time. Add
+this ONE line to the environment's setup script (cloud environment menu > Edit >
+Setup script):
+
+```sh
+sh /home/user/victorias-blossom-automation/setup.sh
+```
+
+Until that line is in place, every run where a login has lapsed fails to self-heal
+with `Cannot find package 'playwright-core'` and sends an ACTION NEEDED alert instead.
+
+### `package.json` / `package-lock.json`
+Declare and pin `playwright-core`, which `login.mjs` needs. `node_modules` is
+git-ignored: it is recreated by `setup.sh` at container start.
