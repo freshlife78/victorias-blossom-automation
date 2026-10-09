@@ -94,3 +94,42 @@ Bicolor, grower Local Nursery, swappable quantity 1, pack 15.
 - The "Mainland plant purchases" scheduled prompt, as a step at the end of the
   routine gated on Matthew's final confirmation, with the Friday 10:00 Pacific
   alert.
+
+## Read-only findings, 2026-10-09 afternoon (ADMIN context)
+
+- `/buyers/{id}/buyer-orders` is **admin scope**: the SALES login gets
+  `403 THIS ACTION IS UNAUTHORIZED`. The ADMIN context's backoffice login had
+  expired; `login.mjs backoffice --role admin` restored it (remember-me ticked,
+  `PERSISTS_OK`, 400-day `remember_web_*` cookie).
+- **Buyer 318 is "Victorias Blossom Wholesale" — our own account**, owner of
+  request 3138. It is not the customer. Customers are `sub_buyer`s (Vernon
+  Flower Shop is sub_buyer 472).
+- Request 3138 is a `BuyerOrder`. Its `details` (paginated, 50 per page) are
+  the **request lines**: `id, product_id, parameter_card_id, grower_id,
+  quantity, is_standing, buyer_order_id, grower_offers[]`.
+- An **offer** hangs off a request line: `id, product_id, parameter_card_id,
+  grower_id, quantity, price` (cents), `is_standing, draft,
+  buyer_order_detail_id, meta{grower_invoice_number, visible_in_marketplace},
+  cost_analysis_id`.
+- **Ground truth from Eduardo's hand-done Vernon line:** request line 667395
+  (Assorted 4" African Violet, product 73892, card 5390 = PACK-15, qty 1)
+  carrying offer 1549133 from grower 1053 at **3210 cents = $32.10/pack**.
+  Ledger Mainland cost for 1-10-030 is 2.09/unit x 15 = $31.35 — does not
+  match; which number was typed needs confirming.
+- **Request lines already exist on 3138 for the Mainland swappable items**,
+  with quantity equal to the packs ordered and no offer: Ming Stump 667378
+  (qty 1), Chinese Money Plant 667377 (qty 2) and 667394 (qty 1), Premium
+  Assorted 4" 667376, and an older African Violet line 667375 (qty 2, no
+  offer) next to the new 667395. So step 2 ("create a new request") may be
+  duplicating a line the system already made from the customer order; it may
+  be that only the offer is needed, against the existing line.
+- Boston Fern line 667265 already carries a 1053 offer and is absent from the
+  swappable list — consistent with rule 2 (matched lines drop off).
+- **New request form** (modal): product-name search, subcategory filter,
+  quantity, Standing order / Open market select; buttons "Create and close",
+  "Create and new".
+- **New offer form** (inline on a request line): subcategory filter, grower
+  filter, "Search requests...", quantity, Standing/Open market, price, two
+  checkboxes, grower invoice number, one more select, and a text field that
+  defaults to "1". Inputs are Vue-bound with no `name` attributes, so the
+  endpoints were not captured. **No write was attempted.**
