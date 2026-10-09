@@ -185,3 +185,16 @@ line/offer this run created, never anything else).
   $58.32, sub-buyer line VIC-0025503 / The Painted Daisy) was prepared and
   **blocked by the session's permission mode** before any call was made.
   Nothing was created. The exact module is ready to re-run with approval.
+
+## Supervised run, 2026-10-09 ~14:10 Pacific — approved by Eduardo
+
+- `POST /buyers/orders/3138/details {product_id 74011, parameter_card_id
+  5563, quantity 1, is_standing false}` → request line **667396**.
+- `POST /order-details/667396/grower-offers {grower_id 1053, quantity 1,
+  price 58.32, is_standing false, draft false, …}` → offer **1549143**,
+  stored `price: 5832`. **Confirmed: the endpoint takes dollars per pack and
+  the DB stores cents.**
+- Both calls answer `200` with an HTML (Inertia redirect) body, not JSON;
+  success is confirmed by reading the page props back, not from the response.
+- The pre-existing no-offer line 667378 for the same product was left alone,
+  per "always create a new line".
