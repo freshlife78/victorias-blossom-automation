@@ -198,3 +198,17 @@ line/offer this run created, never anything else).
   success is confirmed by reading the page props back, not from the response.
 - The pre-existing no-offer line 667378 for the same product was left alone,
   per "always create a new line".
+
+### Verification (SALES context, same afternoon)
+
+- `GET /buyer/orders/3138/swappable-details`: **25 → 24 lines**;
+  VIC-0025503 (Ming Stump, The Painted Daisy) is gone. Matching was
+  immediate — no delay between the offer and the line dropping off.
+- `GET /buyer/sub-buyer-orders/VIC-0001232/details` (the customer's order):
+  that line now carries **`corresponding_offer_exists: true`**, grower 1053,
+  customer price 7290 ($72.90 = Mainland 14.58 × 4 ÷ 0.8). This field is the
+  per-line "confirmed" signal on the customer side; the swappable list is the
+  to-do list.
+
+Paste-in drafts: `docs/routine-block-confirm.md` (the scheduled prompt) and
+`docs/skill-section-confirm.md` (the skill).
