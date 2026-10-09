@@ -133,3 +133,55 @@ Bicolor, grower Local Nursery, swappable quantity 1, pack 15.
   checkboxes, grower invoice number, one more select, and a text field that
   defaults to "1". Inputs are Vue-bound with no `name` attributes, so the
   endpoints were not captured. **No write was attempted.**
+
+## Answers from Eduardo (2026-10-09, later)
+
+- **Price of the grower = Mainland unit cost × pack size**, in dollars per
+  pack. The $32.10 on the hand-done African Violet was a typo; $31.35
+  (2.09 × 15) is right. Ming Stump: 14.58 × 4 = **$58.32**.
+- **Always create a new request line**; never offer against a line that is
+  already there, even when one exists with no offer.
+- Dropped or substituted lines: **report to Eduardo**, do not confirm.
+- Timing: **the condition is Matthew's confirmation.** If it is in on
+  Thursday, run Thursday; otherwise Friday; if still missing at Friday 10:00
+  Pacific, alert.
+
+## Mechanics (discovered read-only; verified against Laravel validation)
+
+All on the **ADMIN context**, from inside a logged-in backoffice page, with
+the usual headers (`X-XSRF-TOKEN` = decoded `XSRF-TOKEN` cookie,
+`X-Requested-With: XMLHttpRequest`, `Accept: application/json`).
+
+1. **New request line** on the delivering request:
+   `POST /buyers/orders/{buyerOrderId}/details`
+   `{ product_id, parameter_card_id, quantity, is_standing: false }`
+   (quantity = the swappable line's packs; product/card = the swappable
+   line's `product_id` / `parameter_card_id`.)
+2. Re-read `GET /buyers/318/buyer-orders?buyer_order_id={id}` →
+   `props.selectedBuyerOrder.details.data` (paginated, 50/page) and take the
+   newest line for that product/card with no offers — that is the new line.
+3. **Offer** on it from Local Nursery:
+   `POST /order-details/{buyerOrderDetailId}/grower-offers`
+   `{ product_id, parameter_card_id, grower_id: 1053, quantity, price,
+   is_standing: false, draft: false }` — `price` in **dollars per pack**
+   (= Mainland unit cost × pack); the DB stores cents (hand-done offer shows
+   `3210` for $32.10). Confirm on first live run that `58.32` lands as `5832`;
+   `PUT /grower-offers/{id}` exists to correct it if not.
+4. **Verify the match** on the SALES context: the swappable line must be
+   gone from `GET /buyer/orders/{id}/swappable-details`. Totals per
+   product+pack are the unit of verification, never individual lines
+   (random matching when several identical swaps exist).
+
+Both store endpoints answer `422` with the field list above on an empty body
+and create nothing — that is how the fields were confirmed. Other routes of
+interest: `PUT buyer/sub-buyer-orders/details/{id}/swap` (the match itself,
+sales scope), `DELETE buyers/orders/{bo}/details/{d}` and
+`DELETE grower-offers/{id}` (cleanup of a partial failure — only on the
+line/offer this run created, never anything else).
+
+## Status
+
+- The single supervised run on Ming Stump (product 74011, card 5563, qty 1,
+  $58.32, sub-buyer line VIC-0025503 / The Painted Daisy) was prepared and
+  **blocked by the session's permission mode** before any call was made.
+  Nothing was created. The exact module is ready to re-run with approval.
